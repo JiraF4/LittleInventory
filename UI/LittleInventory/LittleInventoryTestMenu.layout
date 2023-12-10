@@ -1,0 +1,41 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ {
+  OverlayWidgetClass "{5F114285AF44322D}" {
+   Name "LittleInventory"
+   Slot FrameWidgetSlot "{5F114285AF443202}" {
+    PositionX 794.155
+    OffsetLeft 794.155
+    PositionY 127.592
+    OffsetTop 127.592
+    SizeX 464.485
+    OffsetRight -1258.64
+    SizeY 798.217
+    OffsetBottom -925.809
+   }
+   components {
+    PS_LittleInventory "{5F1147EA6EFC57B2}" {
+    }
+   }
+   {
+    ScrollLayoutWidgetClass "{5F1147FD152DC5E2}" {
+     Name "ScrollLayout"
+     Slot OverlayWidgetSlot "{5F1147FD152DC519}" {
+      HorizontalAlign 3
+      VerticalAlign 3
+     }
+     style Blank
+     {
+      VerticalLayoutWidgetClass "{5F1147FD133082B9}" {
+       Name "LittleInventoryEntitiesList"
+       Slot AlignableSlot "{5F1147FD1519A938}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

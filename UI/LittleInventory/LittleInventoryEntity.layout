@@ -1,0 +1,118 @@
+VerticalLayoutWidgetClass {
+ Name "LittleInventoryEntity"
+ Slot LayoutSlot "{5F1147E2C1212C8D}" {
+  Padding 0 0 0 8
+ }
+ components {
+  PS_LittleInventoryEntity "{5F1147EA66EF7C4A}" {
+  }
+ }
+ {
+  PanelWidgetClass "{5F1147E2EE9D1031}" {
+   Name "LittleInventoryEntityHeader"
+   Slot LayoutSlot "{5F1147E2ED9CBB3B}" {
+    SizeMode Fill
+   }
+   Color 0 0 0 1
+   style full
+   {
+    HorizontalLayoutWidgetClass "{5F1147E3611C4AF6}" {
+     Name "HorizontalLayout"
+     Slot FrameWidgetSlot "{5F1147E3611C4A9A}" {
+      Anchor 0 0 1 1
+      PositionX 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX -248.495
+      OffsetRight 0
+      SizeY 0
+      OffsetBottom 0
+      SizeToContent 1
+     }
+     {
+      TextWidgetClass "{5F1147E36BD97AF0}" {
+       Name "EntityName"
+       Slot LayoutSlot "{5F1147E36BD97A92}" {
+        Padding 4 0 0 0
+        SizeMode Fill
+       }
+       Text "Entity name"
+      }
+      TextWidgetClass "{5F1147E36CE3A906}" {
+       Name "EntityWeight"
+       Slot LayoutSlot "{5F1147E36BD97A92}" {
+        Padding 0 0 4 0
+       }
+       Text "12kg"
+      }
+      TextWidgetClass "{5F1147E36CDAD8AA}" {
+       Name "EntityVolume"
+       Slot LayoutSlot "{5F1147E36BD97A92}" {
+        Padding 0 0 4 0
+       }
+       Text "75%"
+      }
+      ImageWidgetClass "{5F1147E370189CCB}" {
+       Name "Close"
+       Slot LayoutSlot "{5F1147E370189CD4}" {
+       }
+       Texture "{D17288006833490F}UI/Textures/Icons/icons_wrapperUI-32.imageset"
+       Image "searhAndDestroyCommandAlt"
+       Size 32 32
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass "{5F1217F78E05B02A}" {
+   Name "ItemsPanel"
+   Slot LayoutSlot "{5F1217F78E05B007}" {
+   }
+   Color 0.117 0.117 0.117 1
+   style full
+   {
+    GridLayoutWidgetClass "{5F1147E2EE9D1035}" {
+     Name "LittleInventoryEntityItems"
+     Slot FrameWidgetSlot "{5F1217F78E18F160}" {
+      Anchor 0 0 1 1
+      PositionX 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX -1820
+      OffsetRight 0
+      SizeY 30
+      OffsetBottom 0
+      SizeToContent 1
+     }
+    }
+   }
+  }
+  PanelWidgetClass "{5F1217F791D60076}" {
+   Name "SlotsPanel"
+   Slot LayoutSlot "{5F1217F791D60056}" {
+    Padding 0 4 0 0
+   }
+   Color 0.386 0.386 0.386 1
+   style full
+   {
+    GridLayoutWidgetClass "{5F1147E509C29DFE}" {
+     Name "LittleInventoryEntitySlots"
+     Slot FrameWidgetSlot "{5F1217F791298528}" {
+      Anchor 0 0 1 1
+      PositionX 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX -1820
+      OffsetRight 0
+      SizeY 30
+      OffsetBottom 0
+      SizeToContent 1
+     }
+    }
+   }
+  }
+ }
+}
