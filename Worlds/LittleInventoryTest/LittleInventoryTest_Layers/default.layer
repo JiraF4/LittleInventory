@@ -1,3 +1,6 @@
-SCR_ChimeraCharacter Borya : "{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et" {
+SCR_ChimeraCharacter Borya2 : "{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et" {
  coords 101.638 1 138.388
+}
+SCR_ChimeraCharacter Borya : "{CE33AB22F61F3365}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Sharpshooter.et" {
+ coords 100.345 1 138.406
 }

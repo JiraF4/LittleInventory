@@ -4,10 +4,13 @@ class PS_LittleInventory : SCR_ScriptedWidgetComponent
 	
 	VerticalLayoutWidget m_vLittleInventoryEntitiesList;
 	
+	PS_LittleInventoryItemInfo m_hLittleInventoryItemInfo;
+	
 	override void HandlerAttached(Widget w)
 	{
 		super.HandlerAttached(w);
 		m_vLittleInventoryEntitiesList = VerticalLayoutWidget.Cast(w.FindAnyWidget("LittleInventoryEntitiesList"));
+		m_hLittleInventoryItemInfo = PS_LittleInventoryItemInfo.Cast(w.FindAnyWidget("LittleInventoryItemInfo").FindHandler(PS_LittleInventoryItemInfo));
 		
 		GetGame().GetCallqueue().CallLater(TestOpen, 0);
 	}
@@ -29,7 +32,11 @@ class PS_LittleInventory : SCR_ScriptedWidgetComponent
 	
 	void OnCellClick(PS_LittleInventoryItemCell cell)
 	{
+		m_hLittleInventoryItemInfo.SetCell(cell);
 		IEntity item = cell.GetItem();
-		OpenEntity(item);
+		if (!item) return;
+		InventoryItemComponent inventoryItem = InventoryItemComponent.Cast(item.FindComponent(InventoryItemComponent));
+		BaseInventoryStorageComponent storage = BaseInventoryStorageComponent.Cast(inventoryItem);
+		if (storage) OpenEntity(item);
 	}
 }

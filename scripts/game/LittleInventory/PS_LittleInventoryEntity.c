@@ -14,15 +14,25 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 	TextWidget m_wEntityWeight;
 	TextWidget m_wEntityVolume;
 	
+	ButtonWidget m_wCloseButton;
+	
 	override void HandlerAttached(Widget w)
 	{
 		super.HandlerAttached(w);
+		
+		if (!GetGame().InPlayMode())
+			return;
+		
 		m_gLittleInventoryEntityItems = GridLayoutWidget.Cast(w.FindAnyWidget("LittleInventoryEntityItems"));
 		m_gLittleInventoryEntitySlots = GridLayoutWidget.Cast(w.FindAnyWidget("LittleInventoryEntitySlots"));
 		
 		m_wEntityName = TextWidget.Cast(w.FindAnyWidget("EntityName"));
 		m_wEntityWeight = TextWidget.Cast(w.FindAnyWidget("EntityWeight"));
 		m_wEntityVolume = TextWidget.Cast(w.FindAnyWidget("EntityVolume"));
+		
+		m_wCloseButton = ButtonWidget.Cast(w.FindAnyWidget("CloseButton"));
+		SCR_ButtonBaseComponent button = SCR_ButtonBaseComponent.Cast(m_wCloseButton.FindHandler(SCR_ButtonBaseComponent));
+		button.m_OnClicked.Insert(OnCloseClick);
 	}
 	
 	void SetInventory(PS_LittleInventory littleInventory)
@@ -34,19 +44,35 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 	{
 		InventoryItemComponent inventoryItem = InventoryItemComponent.Cast(entity.FindComponent(InventoryItemComponent));
 		BaseInventoryStorageComponent storage = BaseInventoryStorageComponent.Cast(inventoryItem);
+		ClothNodeStorageComponent ClothNode = ClothNodeStorageComponent.Cast(inventoryItem);
 		ChimeraCharacter character = ChimeraCharacter.Cast(entity);
 		
-		UIInfo info = inventoryItem.GetUIInfo();
-		
+		if (inventoryItem)
+		{
+			UIInfo info = inventoryItem.GetUIInfo();
+			if (info)
+			{
+				m_wEntityName.SetText(info.GetName());
+				m_wEntityWeight.SetText("");
+				m_wEntityVolume.SetText("");
+			}
+		}
 		
 		array<IEntity> items = new array<IEntity>();
 		if (storage) storage.GetAll(items);
-		
 		array<ref PS_SlotCell> slots = {};
+		
 		if (character)
 		{
 			SCR_InventoryConfig inventoryUIConfig = SCR_InventoryConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(BaseContainerTools.LoadContainer("{024B56A4DE577001}Configs/Inventory/InventoryUI.conf").GetResource().ToBaseContainer()));
 			SCR_CharacterInventoryStorageComponent characterInventoryStorage = SCR_CharacterInventoryStorageComponent.Cast(storage);
+			
+			SCR_EditableCharacterComponent editableCharacter = SCR_EditableCharacterComponent.Cast(character.FindComponent(SCR_EditableCharacterComponent));
+			SCR_UIInfo info = editableCharacter.GetInfo();
+			m_wEntityName.SetText(info.GetName());
+			m_wEntityWeight.SetText("");
+			m_wEntityVolume.SetText("");
+			
 			
 			int i = 0;
 			LoadoutAreaType loadoutAreaType = inventoryUIConfig.GetAreaByRow(i);
@@ -74,8 +100,17 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 			}
 		}
 		
-		FillSlotsGrid(slots);
+		if (ClothNode)
+		{
+			int slotsCount = ClothNode.GetSlotsCount();
+			for (int i = 0; i < slotsCount; i++)
+			{
+				InventoryStorageSlot slot = ClothNode.GetSlot(i);
+				slots.Insert(new PS_SlotCell(slot.GetAttachedEntity(), ""));
+			}
+		}
 		
+		FillSlotsGrid(slots);
 		foreach (PS_SlotCell slot : slots)
 		{
 			// Remove items in slots
@@ -135,6 +170,11 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 	void OnCellClick(PS_LittleInventoryItemCell cell)
 	{
 		m_iLittleInventory.OnCellClick(cell)
+	}
+	
+	void OnCloseClick(SCR_ButtonTextComponent button)
+	{
+		m_wRoot.RemoveFromHierarchy();
 	}
 }
 

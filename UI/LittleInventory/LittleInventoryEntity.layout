@@ -53,13 +53,57 @@ VerticalLayoutWidgetClass {
        }
        Text "75%"
       }
-      ImageWidgetClass "{5F1147E370189CCB}" {
-       Name "Close"
-       Slot LayoutSlot "{5F1147E370189CD4}" {
+      ButtonWidgetClass "{5F140D727A627BB3}" {
+       Name "CloseButton"
+       Slot LayoutSlot "{5F14135187CB72AF}" {
+        HorizontalAlign 3
+        VerticalAlign 3
        }
-       Texture "{D17288006833490F}UI/Textures/Icons/icons_wrapperUI-32.imageset"
-       Image "searhAndDestroyCommandAlt"
-       Size 32 32
+       Color 0.314 0.314 0.314 1
+       components {
+        SCR_ButtonBaseComponent "{5F140D71C28D212F}" {
+         m_BackgroundDefault 0 0 0 0.784
+         m_BackgroundHovered 0.898 0.541 0.184 0.471
+         m_BackgroundSelected 0.76 0.392 0.08 0.3
+        }
+       }
+       {
+        OverlayWidgetClass "{5F140D727A627BB4}" {
+         Prefab "{5F13554AAC25679E}"
+         Name "Overlay"
+         Slot ButtonWidgetSlot "{5F14135187CB72F7}" {
+          HorizontalAlign 3
+          VerticalAlign 3
+         }
+         {
+          ImageWidgetClass "{5F1147E370189CCB}" {
+           Name "Close"
+           Slot OverlayWidgetSlot "{5F14135187CB72D2}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+           Texture "{D17288006833490F}UI/Textures/Icons/icons_wrapperUI-32.imageset"
+           Image "searhAndDestroyCommandAlt"
+           Size 32 32
+          }
+          PanelWidgetClass "{5F140D7209944A67}" {
+           Name "Background"
+           Slot OverlayWidgetSlot "{5F14135187CB7236}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+           style outline_4px
+          }
+          PanelWidgetClass "{5F140D7209944A41}" {
+           Name "Border"
+           Slot OverlayWidgetSlot "{5F14135187CB7206}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+          }
+         }
+        }
+       }
       }
      }
     }
