@@ -17,7 +17,11 @@ class PS_LittleInventoryItemInfo : SCR_ScriptedWidgetComponent
 	void SetCell(PS_LittleInventoryItemCell itemCell)
 	{
 		m_hLittleInventoryItemCell = itemCell;
-		
+		if (!itemCell) {
+			m_wRoot.SetVisible(false);
+			return;
+		}
+			
 		// Show only for cells with item
 		IEntity entity = itemCell.GetItem();
 		if (!itemCell.GetItem())
@@ -36,6 +40,11 @@ class PS_LittleInventoryItemInfo : SCR_ScriptedWidgetComponent
 			{
 				m_wEntityName.SetText(info.GetName());
 				m_wEntityDescription.SetText(info.GetDescription());
+			}
+			else 
+			{
+				m_wRoot.SetVisible(false);
+				return;
 			}
 		}
 		

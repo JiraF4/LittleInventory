@@ -80,12 +80,22 @@ SizeLayoutWidgetClass {
         HorizontalAlign 3
         VerticalAlign 3
        }
+       "Z Order" 1
        "Use Engine Scale" 0
        xscale 4
        yscale 4
        Format LDR
        "Use clear color" 1
        "Blend mode" Blend
+      }
+      TextWidgetClass "{5F16111706FC3348}" {
+       Name "CountText"
+       Slot OverlayWidgetSlot "{5F16111706FC3CA0}" {
+        HorizontalAlign 2
+        VerticalAlign 2
+       }
+       "Z Order" 20
+       Text "12"
       }
      }
     }

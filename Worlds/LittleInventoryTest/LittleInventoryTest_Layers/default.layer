@@ -1,6 +1,20 @@
 SCR_ChimeraCharacter Borya2 : "{6058AB54781A0C52}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_AMG.et" {
  coords 101.638 1 138.388
 }
-SCR_ChimeraCharacter Borya : "{CE33AB22F61F3365}Prefabs/Characters/Factions/INDFOR/FIA/Character_FIA_Sharpshooter.et" {
- coords 100.345 1 138.406
+Vehicle BTR : "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et" {
+ coords 131.774 1 125.443
+}
+SCR_ChimeraCharacter Borya : "{C9E4FEAF5AAC8D8C}Prefabs/Characters/Factions/BLUFOR/US_Army/Character_US_Medic.et" {
+ components {
+  SCR_InventoryStorageManagerComponent "{520EA1D2DB118DE5}" {
+   InitialInventoryItems {
+    ItemsInitConfigurationItem "{5538C29CBE93E810}" {
+     PrefabsToSpawn {
+      "{D70216B1B2889129}Prefabs/Items/Medicine/Tourniquet_01/Tourniquet_US_01.et"
+     }
+    }
+   }
+  }
+ }
+ coords 127.38 1 126.334
 }

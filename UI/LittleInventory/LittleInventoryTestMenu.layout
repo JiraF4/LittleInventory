@@ -6,13 +6,13 @@ FrameWidgetClass {
    Slot FrameWidgetSlot "{5F114285AF443202}" {
     Anchor 0.5 0.5 0.5 0.5
     PositionX -165.845
-    OffsetLeft -165.845
+    OffsetLeft -165.8
     PositionY -412.408
-    OffsetTop -412.408
-    SizeX 464.485
-    OffsetRight -298.64
-    SizeY 798.217
-    OffsetBottom -385.809
+    OffsetTop -412.4
+    SizeX 448
+    OffsetRight -282.2
+    SizeY 798
+    OffsetBottom -385.6
    }
    Clipping False
    components {
