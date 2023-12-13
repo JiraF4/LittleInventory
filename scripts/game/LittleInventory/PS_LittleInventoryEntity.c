@@ -182,9 +182,11 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 		{
 			float occupiedSpace = storage.GetOccupiedSpace();
 			float maxVolume = storage.GetMaxVolumeCapacity();
+			float weight = storage.GetTotalWeight();
 			
 			//m_wEntityWeight.SetText("");
-			m_wEntityVolume.SetTextFormat("%1/%2", (int)(occupiedSpace/100), (int)(maxVolume/100));
+			m_wEntityVolume.SetTextFormat("%1/%2cm3", (int)(occupiedSpace/100), (int)(maxVolume/100));
+			m_wEntityWeight.SetTextFormat("%1kg", weight);
 		}
 		
 		if (!character)

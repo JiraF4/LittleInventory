@@ -20,10 +20,10 @@ SizeLayoutWidgetClass {
     VerticalAlign 3
     Padding 4 4 4 4
    }
-   Color 0.013 0.013 0.013 1
+   Color 0.013 0.013 0.013 0
    components {
     SCR_ButtonTextComponent "{5F13554A9F49CA88}" {
-     m_BackgroundDefault 0 0 0 0.784
+     m_BackgroundDefault 0 0 0 0.502
      m_BackgroundHovered 0.898 0.541 0.184 0.471
      m_BackgroundSelected 0.76 0.392 0.08 0.3
      m_TextToggled 0.761 0.386 0.078 1

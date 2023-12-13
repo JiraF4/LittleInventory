@@ -95,7 +95,7 @@ VerticalLayoutWidgetClass {
             HorizontalAlign 3
             VerticalAlign 3
            }
-           style outline_4px
+           style outline_2px
           }
           PanelWidgetClass "{5F140D7209944A41}" {
            Name "Border"
@@ -103,6 +103,7 @@ VerticalLayoutWidgetClass {
             HorizontalAlign 3
             VerticalAlign 3
            }
+           style outline_4px
           }
          }
         }
@@ -117,7 +118,7 @@ VerticalLayoutWidgetClass {
    Slot LayoutSlot "{5F1217F78E05B007}" {
     Padding 0 0 0 1
    }
-   Color 0.117 0.117 0.117 1
+   Color 0.117 0.117 0.117 0.251
    style full
    {
     GridLayoutWidgetClass "{5F1147E2EE9D1035}" {
@@ -204,7 +205,7 @@ VerticalLayoutWidgetClass {
    Slot LayoutSlot "{5F1217F791D60056}" {
     Padding 0 0 0 4
    }
-   Color 0.386 0.386 0.386 1
+   Color 0.117 0.117 0.117 0.251
    style full
    {
     GridLayoutWidgetClass "{5F1147E509C29DFE}" {
