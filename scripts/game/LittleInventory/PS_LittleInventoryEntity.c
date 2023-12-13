@@ -159,9 +159,9 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 			bool grouped;
 			
 			InventoryItemComponent inventoryItemGrouped = InventoryItemComponent.Cast(itemEntity.FindComponent(InventoryItemComponent));
-			BaseInventoryStorageComponent storageGrouped = BaseInventoryStorageComponent.Cast(inventoryItemGrouped);
+			SCR_ItemAttributeCollection itemAttributeCollection = SCR_ItemAttributeCollection.Cast(inventoryItemGrouped.GetAttributes());
 			
-			if (!storageGrouped)
+			if (itemAttributeCollection.IsStackable())
 				foreach (PS_SlotCell slotCellGrouped: groupesItems)
 				{
 					ResourceName resourceGrouped = slotCellGrouped.GetItem().GetPrefabData().GetPrefabName();
@@ -188,30 +188,21 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 		}
 		
 		if (!character)
-			while (Math.Mod(groupesItems.Count(), 7) > 0 || groupesItems.Count() == 0)
-			{
-				groupesItems.Insert(new PS_SlotCell(storage, null, "", -1))
-			}
+			if (groupesItems.Count() == 0)
+				groupesItems.Insert(new PS_SlotCell(storage, null, "", -1));
 		
-		FillItemsGrid(slots, m_rSlotCell, m_gLittleInventoryEntitySlots);
-		FillItemsGrid(groupesItems, m_rItemCell, m_gLittleInventoryEntityItems);
+		FillSlotsGrid(slots, m_rSlotCell, m_gLittleInventoryEntitySlots);
+		FillItemsGrid(groupesItems, storage, m_rItemCell, m_gLittleInventoryEntityItems);
 	}
 	
-	void FillItemsGrid(array<ref PS_SlotCell> slots, ResourceName cellResourceName, Widget littleInventoryEntityItems)
+	void FillSlotsGrid(array<ref PS_SlotCell> slots, ResourceName cellResourceName, Widget littleInventoryEntityItems)
 	{
 		int x = 0;
 		int y = 0;
 		
 		foreach (PS_SlotCell slot : slots)
 		{
-			Widget ItemCell = GetGame().GetWorkspace().CreateWidgets(cellResourceName, littleInventoryEntityItems);
-			GridSlot.SetColumn(ItemCell, x);
-			GridSlot.SetRow(ItemCell, y);
-			
-			PS_LittleInventoryItemCell littleInventorySlotCell = PS_LittleInventoryItemCell.Cast(ItemCell.FindHandler(PS_LittleInventoryItemCell));
-			littleInventorySlotCell.SetInventoryEntity(this, slot.GetSlotId());
-			littleInventorySlotCell.SetCell(slot);
-			littleInventorySlotCell.SetStorage(slot.GetInventory());
+			CreateSlot(x, y, 1, 1, slot, cellResourceName, littleInventoryEntityItems);
 			
 			x++;
 			if (x >= 7)
@@ -220,6 +211,61 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 				y++;
 			}
 		}
+	}
+	
+	void FillItemsGrid(array<ref PS_SlotCell> slots, BaseInventoryStorageComponent storage, ResourceName cellResourceName, Widget littleInventoryEntityItems)
+	{
+		PS_LittleInventoryMatrix matrix = new PS_LittleInventoryMatrix(7, 0);
+		
+		foreach (PS_SlotCell slot : slots)
+		{
+			int w = 1, h = 1;
+			IEntity itemEntity = slot.GetItem();
+			if (itemEntity)
+			{
+				InventoryItemComponent inventoryItemGrouped = InventoryItemComponent.Cast(itemEntity.FindComponent(InventoryItemComponent));
+				SCR_ItemAttributeCollection itemAttributeCollection = SCR_ItemAttributeCollection.Cast(inventoryItemGrouped.GetAttributes());
+				ESlotSize itemSize = itemAttributeCollection.GetItemSize();
+				switch(itemSize)
+				{
+					case ESlotSize.SLOT_2x1: { w = 2; h = 1;} break;
+					case ESlotSize.SLOT_2x2: { w = 2; h = 2;} break;
+					case ESlotSize.SLOT_3x3: { w = 3; h = 3;} break;
+				}
+			}
+			int x, y;
+			matrix.ReserveFirstFreePlace(x, y, w, h);
+			
+			CreateSlot(x, y, w, h, slot, cellResourceName, littleInventoryEntityItems);
+		}
+		
+		for (int x = 0; x < matrix.GetColumnsCount(); x++)
+		{
+			for (int y = 0; y < matrix.GetRowsCount(); y++)
+			{
+				if (matrix.IsPlaceFree(x, y, 1, 1))
+					CreateSlot(x, y, 1, 1, new PS_SlotCell(storage, null, "", -1), cellResourceName, littleInventoryEntityItems);
+			}
+		}
+	}
+	
+	void CreateSlot(int x, int y, int w, int h, PS_SlotCell slot, ResourceName cellResourceName, Widget littleInventoryEntityItems)
+	{
+		Widget itemCell = GetGame().GetWorkspace().CreateWidgets(cellResourceName, littleInventoryEntityItems);
+		SizeLayoutWidget itemCellSize = SizeLayoutWidget.Cast(itemCell);
+		
+		GridSlot.SetColumn(itemCell, x + 1);
+		GridSlot.SetRow(itemCell, y + 1);
+		GridSlot.SetColumnSpan(itemCell, w);
+		GridSlot.SetRowSpan(itemCell, h);
+		
+		itemCellSize.SetWidthOverride(64.0 * w);
+		itemCellSize.SetHeightOverride(64.0 * h);
+		
+		PS_LittleInventoryItemCell littleInventorySlotCell = PS_LittleInventoryItemCell.Cast(itemCell.FindHandler(PS_LittleInventoryItemCell));
+		littleInventorySlotCell.SetInventoryEntity(this, slot.GetSlotId());
+		littleInventorySlotCell.SetCell(slot);
+		littleInventorySlotCell.SetStorage(slot.GetInventory());
 	}
 	
 	// events
