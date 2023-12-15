@@ -109,20 +109,24 @@ class PS_LittleInventoryItemCell : SCR_ScriptedWidgetComponent
 	// events
 	void OnCellSelect()
 	{
+		if (!m_iLittleInventoryEntity) return;
 		m_iLittleInventoryEntity.OnCellSelect(this);
 	}
 	void OnCellSelectLost()
 	{
+		if (!m_iLittleInventoryEntity) return;
 		m_iLittleInventoryEntity.OnCellSelectLost(this);
 	}
 	
 	void OnCellFocus()
 	{
+		if (!m_iLittleInventoryEntity) return;
 		m_iLittleInventoryEntity.OnCellFocus(this);
 	}
 	
 	void OnCellFocusLost()
 	{
+		if (!m_iLittleInventoryEntity) return;
 		m_iLittleInventoryEntity.OnCellFocusLost(this);
 	}
 	

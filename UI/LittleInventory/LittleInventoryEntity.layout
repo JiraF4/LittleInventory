@@ -116,9 +116,8 @@ VerticalLayoutWidgetClass {
   PanelWidgetClass "{5F1217F78E05B02A}" {
    Name "ItemsPanel"
    Slot LayoutSlot "{5F1217F78E05B007}" {
-    Padding 0 0 0 1
    }
-   Color 0.117 0.117 0.117 0.251
+   Color 0 0 0 0.251
    style full
    {
     GridLayoutWidgetClass "{5F1147E2EE9D1035}" {
@@ -203,9 +202,8 @@ VerticalLayoutWidgetClass {
   PanelWidgetClass "{5F1217F791D60076}" {
    Name "SlotsPanel"
    Slot LayoutSlot "{5F1217F791D60056}" {
-    Padding 0 0 0 4
    }
-   Color 0.117 0.117 0.117 0.251
+   Color 0 0 0 0.251
    style full
    {
     GridLayoutWidgetClass "{5F1147E509C29DFE}" {

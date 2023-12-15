@@ -5,27 +5,34 @@ class PS_LittleInventory : SCR_ScriptedWidgetComponent
 	VerticalLayoutWidget m_vLittleInventoryEntitiesList;
 	
 	PS_LittleInventoryItemInfo m_hLittleInventoryItemInfo;
+	PS_LittleInventoryItemInfo m_hLittleInventoryItemInfoExternal;
+	
 	PS_LittleInventoryItemCell m_cLittleInventoryItemCellSelected;
+	
+	ref ScriptInvoker m_iOnEntityRemoved = new ScriptInvoker();
 	
 	override void HandlerAttached(Widget w)
 	{
 		super.HandlerAttached(w);
 		m_vLittleInventoryEntitiesList = VerticalLayoutWidget.Cast(w.FindAnyWidget("LittleInventoryEntitiesList"));
 		m_hLittleInventoryItemInfo = PS_LittleInventoryItemInfo.Cast(w.FindAnyWidget("LittleInventoryItemInfo").FindHandler(PS_LittleInventoryItemInfo));
-		
-		GetGame().GetCallqueue().CallLater(TestOpen, 0);
 	}
 	
-	void TestOpen()
+	void SetExternalItemInfoWidget(Widget itemInfoWidget)
 	{
-		IEntity entity = GetGame().FindEntity("Borya");
-		if (entity)
-			OpenEntity(entity);
-		
-		IEntity entityBTR = GetGame().FindEntity("BTR");
-		if (entityBTR)
-			OpenEntity(entityBTR);
-	};
+		m_hLittleInventoryItemInfo.SetCell(null);
+		m_hLittleInventoryItemInfoExternal = PS_LittleInventoryItemInfo.Cast(itemInfoWidget.FindHandler(PS_LittleInventoryItemInfo));
+	}
+	
+	void Clear()
+	{
+		SCR_WidgetHelper.RemoveAllChildren(m_vLittleInventoryEntitiesList);
+	}
+	
+	bool IsAllClosed()
+	{
+		return !m_vLittleInventoryEntitiesList.GetChildren();
+	}
 	
 	void OpenEntity(IEntity entity)
 	{
@@ -37,6 +44,8 @@ class PS_LittleInventory : SCR_ScriptedWidgetComponent
 	
 	void CellMove(PS_LittleInventoryItemCell cellFrom, PS_LittleInventoryItemCell cellTo)
 	{
+		return; // WIP
+		
 		IEntity itemEntity = cellFrom.GetItem();
 		if (!itemEntity)
 			return;
@@ -98,11 +107,13 @@ class PS_LittleInventory : SCR_ScriptedWidgetComponent
 	
 	void OnCellFocus(PS_LittleInventoryItemCell cell)
 	{
-		m_hLittleInventoryItemInfo.SetCell(cell);
+		if (m_hLittleInventoryItemInfoExternal) m_hLittleInventoryItemInfoExternal.SetCell(cell);
+		else m_hLittleInventoryItemInfo.SetCell(cell);
 	}
 	void OnCellFocusLost(PS_LittleInventoryItemCell cell)
 	{
-		m_hLittleInventoryItemInfo.SetCell(null);
+		if (m_hLittleInventoryItemInfoExternal) m_hLittleInventoryItemInfoExternal.SetCell(null);
+		else m_hLittleInventoryItemInfo.SetCell(null);
 	}
 	
 	void OnCellClick(PS_LittleInventoryItemCell cell)
@@ -112,6 +123,11 @@ class PS_LittleInventory : SCR_ScriptedWidgetComponent
 		InventoryItemComponent inventoryItem = InventoryItemComponent.Cast(item.FindComponent(InventoryItemComponent));
 		BaseInventoryStorageComponent storage = BaseInventoryStorageComponent.Cast(inventoryItem);
 		if (storage) OpenEntity(item);
+	}
+	
+	void EntityRemoved(PS_LittleInventoryEntity inventoryEntity)
+	{
+		m_iOnEntityRemoved.Invoke(inventoryEntity);
 	}
 }
 

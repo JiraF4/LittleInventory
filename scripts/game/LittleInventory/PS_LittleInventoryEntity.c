@@ -274,6 +274,7 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 	override bool OnMouseButtonUp(Widget w, int x, int y, int button)
 	{
 		Widget widget = m_gLittleInventoryEntityItems.GetChildren();
+		if (!widget) return false;
 		PS_LittleInventoryItemCell cell = PS_LittleInventoryItemCell.Cast(widget.FindHandler(PS_LittleInventoryItemCell));
 		OnCellSelectLost(cell);
 		return true;
@@ -304,6 +305,8 @@ class PS_LittleInventoryEntity : SCR_ScriptedWidgetComponent
 	void OnCloseClick(SCR_ButtonTextComponent button)
 	{
 		m_wRoot.RemoveFromHierarchy();
+		if (m_iLittleInventory)
+			m_iLittleInventory.EntityRemoved(this);
 	}
 }
 
